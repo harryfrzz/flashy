@@ -1,15 +1,21 @@
+import { useState } from 'react'
 import InputBar from './components/input-bar'
+import Topbar from './components/topbar'
+import Sidebar from './components/sidebar'
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const openSidebar = () => setIsSidebarOpen(true)
+  const closeSidebar = () => setIsSidebarOpen(false)
 
   return (
-    <div className='w-96 h-96 relative bg-black'>
+    <div className='w-[500px] h-[600px] relative bg-black overflow-hidden'>
+      <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
       <div className='w-full h-full'>
-        {/* Main content area */}
-        <div className='pb-20 p-4'>
-          <h1 className='text-white text-xl mb-4'>Meeting Assistant</h1>
-        </div>
+        <Topbar onOpenSidebar={openSidebar} />
       </div>
+      
       <InputBar/>
     </div>
   )
