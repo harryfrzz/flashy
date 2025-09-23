@@ -1,5 +1,5 @@
 
-import { PanelRight, X } from "lucide-react";
+import { PanelRight, Settings } from "lucide-react";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -25,15 +25,19 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                 onClick={onClose}
                 className="text-white hover:text-gray-300 absolute top-5 right-5"
             >
-                <PanelRight size={24} color="black"/>
+                <PanelRight size={23} color="white"/>
             </button>
 
-                <div className="w-full h-full bg-white rounded-md">
-
+                <div className="w-full h-full bg-transparent rounded-md">
+                    <h1 className="absolute top-4 left-3 text-white text-lg">History</h1>
                 </div>
-                <div className="w-full bg-white h-15 rounded-md">
 
-                </div>
+                <button 
+                className="text-white hover:text-gray-300 absolute bottom-5 right-5"
+            >
+                <Settings size={23} color="white"/>
+            </button>
+
             </div>
         </>
     );
