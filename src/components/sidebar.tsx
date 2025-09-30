@@ -1,5 +1,5 @@
 
-import { PanelRight, Settings } from "lucide-react";
+import { PanelRight, Settings, SquarePen } from "lucide-react";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -12,31 +12,35 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             {/* Backdrop */}
             {isOpen && (
                 <div 
-                    className="w-[500px] h-[600px] fixed inset-0 bg-black opacity-50 z-40"
+                    className="w-[500px] h-[600px] fixed inset-0 bg-white opacity-20 z-20"
                     onClick={onClose}
                 />
-            )}
+            )}  
             <div className={`
-                fixed top-0 left-0 p-2 gap-2 h-[600px] flex justify-between flex-col w-64 bg-black z-50 transform transition-transform duration-300 ease-in-out
+                fixed top-0 left-0 p-2 gap-2 h-[600px] flex justify-start flex-col w-64 bg-blue-200 z-50 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'}
             `}>
-               
-            <button 
-                onClick={onClose}
-                className="text-white hover:text-gray-300 absolute top-5 right-5"
-            >
-                <PanelRight size={23} color="white"/>
-            </button>
-
-                <div className="w-full h-full bg-transparent rounded-md">
-                    <h1 className="absolute top-4 left-3 text-white text-lg">History</h1>
+                
+                <div className="w-full flex justify-between bg-transparent rounded-md px-1 mt-2">
+                    <h1 className=" text-black text-lg">Flashy</h1>
+                    <button 
+                        onClick={onClose}
+                        className="text-white hover:text-gray-300"
+                    >
+                        <PanelRight size={23} color="black"/>
+                    </button>
                 </div>
-
-                <button 
-                className="text-white hover:text-gray-300 absolute bottom-5 right-5"
-            >
-                <Settings size={23} color="white"/>
-            </button>
+                <div className="flex flex-col gap-3 mt-2">
+                    <div className="w-full h-10 bg-blue-300 flex justify-start items-center gap-2 px-2 rounded-lg">
+                        <SquarePen width={18}/>
+                        <p className="text-sm">New Flashcard</p>
+                    </div>
+                    <div className="w-full h-10 bg-blue-300 flex justify-start items-center gap-2 px-2 rounded-lg">
+                        <Settings width={18}/>
+                        <p className="text-sm">Settings</p>
+                    </div>
+                </div>
+                
 
             </div>
         </>
