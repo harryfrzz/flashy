@@ -1,69 +1,43 @@
-# React + TypeScript + Vite
+# Flashy - Offline Flashcard Generator (Chrome Extension with Gemini Nano)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An offline-first **Chrome extension** that helps you learn smarter by turning your notes, PDFs, images, and highlighted text into **flashcards** – powered by **Gemini Nano**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Highlight-to-Flashcard**: Highlight text on any webpage and instantly generate flashcards.  
+- **PDF & Image Support**: Upload your own study material (PDFs, images) to extract content and create flashcards.  
+- **Offline AI**: Works locally using **Gemini Nano**, ensuring privacy and no internet dependency.  
+- **Summarization with Prompt API**: Automatically condenses text into concise Q&A flashcards.  
+- **Modern UI**: Clean, fast, and responsive interface built with **Vite + React + TypeScript**.  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **Frontend**: [React.js](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/)  
+- **AI**: [Gemini Nano](https://ai.google.dev/gemini-api/docs/gemini-nano) (Chrome built-in LLM)  
+- **APIs**: Chrome APIs + Prompt API for summarization  
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Clone the repo:  
+   ```bash
+   git clone https://github.com/harryfrzz/offline-cards.git
+   cd offline-cards
+   ```
+2. Install dependencies:  
+   ```bash
+   npm install
+   ```
+3. Build the extension:  
+   ```bash
+   npm run build
+   ```
+4. Load the extension into Chrome:  
+   - Open `chrome://extensions/`  
+   - Enable **Developer mode**  
+   - Click **Load unpacked** and select the `build/` folder
