@@ -28,7 +28,7 @@ export default function ResultsScreen({
     };
 
     return (
-        <div className="w-full h-auto min-h-auto max-h-105 bg-blue-200 rounded-2xl mt-14 px-5 py-7 flex overflow-scroll flex-col">
+        <div className="w-full h-auto min-h-0 max-h-96 bg-blue-200 rounded-2xl mt-16 px-5 py-7 flex overflow-y-auto flex-col">
             <div className="text-center mb-6">
                 <h1 className="text-3xl font-bold mb-2">Quiz Complete!</h1>
                 <div className={`text-6xl font-bold mb-2 ${getScoreColor(summary.score)}`}>
