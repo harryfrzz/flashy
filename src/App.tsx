@@ -6,18 +6,35 @@ import AttachFile from './components/attach-files'
 import FlashCard from './components/flash-card'
 import ResultsScreen from './components/results-screen'
 import { sampleFlashcards } from './data/flashcards'
-import type { QuizResult, QuizSummary } from './types/flashcard'
+import type { QuizResult, QuizSummary, Flashcard } from './types/flashcard'
 
 function App() {
   const [isPopupOpen, setPopupOpen] = useState(false)
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
-  const [showFlashcards, setShowFlashcards] = useState(true)
+  const [showFlashcards, setShowFlashcards] = useState(false)
   const [quizResults, setQuizResults] = useState<QuizResult[]>([])
   const [showResults, setShowResults] = useState(false)
+  const [currentFlashcards, setCurrentFlashcards] = useState<Flashcard[]>(sampleFlashcards)
 
   
   const togglePopup = () => setPopupOpen(!isPopupOpen)
   const closePopup = () => setPopupOpen(false)
+
+  const handleFlashcardsGenerated = (flashcards: Flashcard[]) => {
+    setCurrentFlashcards(flashcards)
+    setCurrentCardIndex(0)
+    setQuizResults([])
+    setShowResults(false)
+    setShowFlashcards(true)
+  }
+
+  const startSampleQuiz = () => {
+    setCurrentFlashcards(sampleFlashcards)
+    setCurrentCardIndex(0)
+    setQuizResults([])
+    setShowResults(false)
+    setShowFlashcards(true)
+  }
 
   const handleAnswerSelected = (result: QuizResult) => {
     setQuizResults(prev => {
@@ -27,7 +44,7 @@ function App() {
   }
 
   const handleNextCard = () => {
-    if (currentCardIndex < sampleFlashcards.length - 1) {
+    if (currentCardIndex < currentFlashcards.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1)
     } else {
       // Quiz is complete, show results
@@ -44,7 +61,7 @@ function App() {
 
   const getQuizSummary = (): QuizSummary => {
     const correctAnswers = quizResults.filter(r => r.isCorrect).length;
-    const totalQuestions = sampleFlashcards.length;
+    const totalQuestions = currentFlashcards.length;
     return {
       totalQuestions,
       correctAnswers,
@@ -76,30 +93,34 @@ function App() {
     <div onClick={closePopup} className='w-[500px] h-[600px] relative bg-blue-100 overflow-hidden'>
       <Topbar/>
 
-      <div className='w-full h-full p-5 flex overflow-scroll justify-start items-center flex-col gap-4'>
+      <div className='w-full h-[calc(100%-60px)] p-5 flex justify-start items-start flex-col'>
         {showResults ? (
           <ResultsScreen 
             summary={getQuizSummary()}
-            flashcards={sampleFlashcards}
+            flashcards={currentFlashcards}
             onRestartQuiz={restartQuiz}
             onBackToHome={backToHome}
           />
         ) : showFlashcards ? (
           <FlashCard 
-            flashcard={sampleFlashcards[currentCardIndex]}
+            flashcard={currentFlashcards[currentCardIndex]}
             currentIndex={currentCardIndex}
-            totalCards={sampleFlashcards.length}
+            totalCards={currentFlashcards.length}
             onNext={handleNextCard}
             onPrevious={handlePreviousCard}
             onAnswerSelected={handleAnswerSelected}
-            existingAnswer={getExistingAnswer(sampleFlashcards[currentCardIndex].id)}
+            existingAnswer={getExistingAnswer(currentFlashcards[currentCardIndex].id)}
           />
         ) : (
-          <Welcome/>
+          <Welcome onStartSampleQuiz={startSampleQuiz} />
         )}
       </div>
       
-      <AttachFile isOpen={isPopupOpen}/>
+      <AttachFile 
+        isOpen={isPopupOpen} 
+        onFlashcardsGenerated={handleFlashcardsGenerated}
+        onClose={closePopup}
+      />
       <InputBar onOpenPopup={togglePopup}/>
     </div>
   )

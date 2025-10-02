@@ -10,8 +10,7 @@ interface ControlCardsProps {
 
 export default function ControlCards({ 
     onNext, 
-    onPrevious, 
-    canGoNext, 
+    onPrevious,
     canGoPrevious,
     isLastCard
 }: ControlCardsProps) {

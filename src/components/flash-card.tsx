@@ -75,15 +75,19 @@ export default function FlashCard({
     };
 
     return (
-        <div className="w-full h-auto min-h-auto max-h-105 bg-blue-200 rounded-2xl mt-14 px-5 flex flex-col">
-            <h1 className="text-2xl py-7 font-bold">{flashcard.question}</h1>
-            <p className="absolute top-27 right-10">{currentIndex + 1}/{totalCards}</p>
+        <div className="w-full bg-blue-200 rounded-2xl mt-16 px-5 py-4 flex flex-col max-h-[calc(100vh-120px)] overflow-y-auto">
+            {/* Header with question and counter */}
+            <div className="relative mb-4 flex-shrink-0">
+                <h1 className="text-lg font-bold pr-16 leading-tight break-words">{flashcard.question}</h1>
+                <p className="absolute top-0 right-0 text-sm font-medium text-gray-600 bg-blue-200 px-2 py-1 rounded">{currentIndex + 1}/{totalCards}</p>
+            </div>
 
-            <div className="flex flex-col gap-5">
+            {/* Options container with proper spacing */}
+            <div className="flex flex-col gap-3 mb-4 flex-grow">
                 {flashcard.options.map((option) => (
                     <div 
                         key={option.id}
-                        className={`w-full h-12 rounded-lg flex justify-start items-center px-3 gap-2 cursor-pointer transition-colors duration-200 ${
+                        className={`w-full min-h-12 rounded-lg flex justify-start items-center px-3 py-3 gap-3 cursor-pointer transition-colors duration-200 ${
                             showResult && option.isCorrect 
                                 ? 'bg-green-300' 
                                 : showResult && selectedAnswer?.optionId === option.id && !option.isCorrect
@@ -99,27 +103,31 @@ export default function FlashCard({
                             showResult={showResult}
                             onClick={() => handleOptionClick(option.id)}
                         />
-                        <p className="text-sm font-medium">{option.text}</p>
+                        <p className="text-sm font-medium leading-relaxed flex-1 break-words">{option.text}</p>
                     </div>
                 ))}
             </div>
 
+            {/* Explanation section */}
             {showResult && (
-                <div className="mt-25 p-4 bg-blue-200 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">
+                <div className="mb-4 p-4 bg-blue-100 rounded-lg border border-blue-300 flex-shrink-0">
+                    <h3 className="font-semibold text-base mb-2">
                         {selectedAnswer?.isCorrect ? '✅ Correct!' : '❌ Incorrect'}
                     </h3>
-                    <p className="text-sm text-gray-700">{flashcard.explanation}</p>
+                    <p className="text-sm text-gray-700 leading-relaxed break-words">{flashcard.explanation}</p>
                 </div>
             )}
 
-            <ControlCards 
-                onNext={handleNext}
-                onPrevious={handlePrevious}
-                canGoNext={currentIndex < totalCards - 1}
-                canGoPrevious={currentIndex > 0}
-                isLastCard={currentIndex === totalCards - 1}
-            />
+            {/* Control buttons - always at bottom */}
+            <div className="flex-shrink-0">
+                <ControlCards 
+                    onNext={handleNext}
+                    onPrevious={handlePrevious}
+                    canGoNext={currentIndex < totalCards - 1}
+                    canGoPrevious={currentIndex > 0}
+                    isLastCard={currentIndex === totalCards - 1}
+                />
+            </div>
         </div>
     );
 }
